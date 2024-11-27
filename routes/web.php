@@ -15,3 +15,22 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+use App\Http\Controllers\AuthController;
+
+
+// Definir la ruta de login con nombre
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
+
+// Ruta para la vista de inventario
+Route::get('/inventario', function () {
+    return view('inventario'); // Nombre correcto de la vista
+})->name('inventario');
+
+// Ruta para la vista de Ventas
+Route::get('/ventas', function () {
+    return view('ventas'); // Apunta al archivo resources/views/ventas.blade.php
+})->name('ventas');
