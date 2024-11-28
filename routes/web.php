@@ -34,3 +34,15 @@ Route::get('/inventario', function () {
 Route::get('/ventas', function () {
     return view('ventas'); // Apunta al archivo resources/views/ventas.blade.php
 })->name('ventas');
+
+Route::get('/usuario', function () {
+    return view('usuario');
+});
+
+Route::get('/admin', function () {
+    return view('admin');
+});
+
+Route::get('/proveedor', function () {
+    return view('proveedor');
+});

@@ -4,83 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Refaccionaria Olvera - Administrador</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #e6e6fa; /* Fondo rosa claro */
-        }
-        .header-title {
-            font-size: 5rem; /* Tamaño más grande */
-            font-weight: bold; /* Negritas */
-            color: #000; /* Color negro */
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4); /* Sombra detrás de las letras */
-            margin-bottom: 2.5rem; /* Mayor separación del formulario */
-            text-align: center;
-            letter-spacing: 2px; /* Espaciado entre letras */
-        }
-        .login-box {
-            background-color: #fff;
-            padding: 3rem; /* Más espacio interno */
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
-            border: 2px solid #000; /* Contorno negro */
-            width: 100%;
-            max-width: 500px; /* Más ancho */
-        }
-        .login-box h1 {
-            font-size: 2.5rem; /* Más grande dentro del formulario */
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #000; /* Color negro */
-        }
-        .btn-login {
-            background-color: #0d6efd;
-            color: white;
-            border-radius: 30px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        .btn-login:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-        .form-control:focus {
-            border-color: #0d6efd;
-            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
-        }
-        .form-label {
-            font-weight: bold;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <!-- Título principal fuera del formulario -->
-    <div class="header-title">Refaccionaria Olvera</div>
+<body class="flex flex-col items-center justify-center h-screen bg-[#e6e6fa]">
+
+    <!-- Título principal -->
+    <div class="text-center mb-10">
+        <h1 class="text-7xl font-bold text-black drop-shadow-lg tracking-wide mb-10">
+            Refaccionaria Olvera
+        </h1>
+    </div>
     
-    <!-- Caja del formulario de login -->
-    <div class="login-box">
-        <h1>Administrador</h1>
+    <!-- Caja del formulario -->
+    <div class="bg-white p-12 rounded-xl shadow-2xl border-2 border-black max-w-lg w-full">
+        <h1 class="text-4xl font-bold text-center mb-6 text-black">Administrador</h1>
         <form method="POST" action="{{ route('login') }}">
             @csrf
-            <div class="mb-3">
-                <label for="username" class="form-label">Usuario</label>
-                <input type="text" id="username" name="username" class="form-control" placeholder="Ingresa tu usuario" required>
+            <!-- Campo Usuario -->
+            <div class="mb-6">
+                <label for="username" class="block font-bold text-lg text-black mb-2">Usuario</label>
+                <input type="text" id="username" name="username" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ingresa tu usuario" required>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Contraseña</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="Ingresa tu contraseña" required>
+            <!-- Campo Contraseña -->
+            <div class="mb-6">
+                <label for="password" class="block font-bold text-lg text-black mb-2">Contraseña</label>
+                <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ingresa tu contraseña" required>
             </div>
-            <button type="submit" class="btn btn-login w-100">Ingresar</button>
+            <!-- Botón de Ingresar -->
+            <button type="submit" class="w-full bg-blue-500 text-white rounded-full py-3 text-lg font-bold hover:bg-blue-700 hover:scale-105 transition-all">
+                Ingresar
+            </button>
         </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
