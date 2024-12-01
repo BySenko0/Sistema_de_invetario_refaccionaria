@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AlertasController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\AuthRoutesController;
 
 Route::get('/login', [AuthRoutesController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthRoutesController::class, 'login'])->name('login');
+Route::patch('/alertas/{id}/resolver', [AlertasController::class, 'resolverAlerta'])->name('alertas.resolver');
 
 // Ruta para cerrar sesión
 Route::post('/logout', function () {
