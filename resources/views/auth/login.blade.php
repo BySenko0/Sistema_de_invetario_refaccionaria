@@ -20,10 +20,10 @@
         <h1 class="text-4xl font-bold text-center mb-6 text-black">Administrador</h1>
         <form method="POST" action="{{ route('login') }}">
             @csrf
-            <!-- Campo Usuario -->
+            <!-- Campo Email -->
             <div class="mb-6">
-                <label for="username" class="block font-bold text-lg text-black mb-2">Usuario</label>
-                <input type="text" id="username" name="username" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ingresa tu usuario" required>
+                <label for="email" class="block font-bold text-lg text-black mb-2">Correo electrónico</label>
+                <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ingresa tu correo electrónico" required>
             </div>
             <!-- Campo Contraseña -->
             <div class="mb-6">

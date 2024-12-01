@@ -40,7 +40,7 @@
             </button>
             <div id="userDropdown" class="z-10 hidden bg-lavender divide-y divide-gray-100 rounded-lg shadow w-44 ">
                 <div class="py-1">
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black">iniciar seccion</a>
+                    <a href="{{ route('login') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black">iniciar seccion</a>
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
                 <svg class="w-6 h-6 text-gray-800 dark:text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9h13a5 5 0 0 1 0 10H7M3 9l4-4M3 9l4 4"/>
                 </svg>
-                <span class="ml-3">Iniciar seccion</span>
+                <a href="{{ route('login') }}" class="ml-3"> Iniciar seccion</a>
             </li>
         </ul>
     </div>

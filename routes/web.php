@@ -1,12 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthRoutesController;
 
-// Ruta principal
+Route::get('/login', [AuthRoutesController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthRoutesController::class, 'login'])->name('login');
+
+// Ruta para cerrar sesión
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect()->route('users.inicio');
+})->name('logout');
+
+// Ruta principal: redirige al inicio de usuarios
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('users.inicio');
 });
 
 // Rutas protegidas con autenticación
@@ -15,11 +26,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    // Ruta del dashboard
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
     // Rutas para Admin
     Route::prefix('admin')->group(function () {
         Route::get('/inicio', [AdminController::class, 'dashboard'])->name('admin.inicio');
@@ -28,11 +34,6 @@ Route::middleware([
         Route::get('/proveedor', [AdminController::class, 'proveedor'])->name('admin.proveedor');
     });
 });
-
-// Ruta de login
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
 
 // Rutas para User
 Route::prefix('user')->group(function () {
