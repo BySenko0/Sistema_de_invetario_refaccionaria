@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id(); // PK
-            $table->string('nombre');
-            $table->text('descripcion');
-            $table->decimal('precio', 8, 2);
-            $table->integer('stock');
-            $table->boolean('activo')->default(true);
-            $table->timestamps();
-            $table->softDeletes();
+            $table->string('nombre'); // Nombre del producto
+            $table->text('descripcion'); // Descripción del producto
+            $table->foreignId('categoria_id')->constrained('categorias')->onDelete('cascade');
+            $table->decimal('precio', 8, 2); // Precio del producto
+            $table->integer('stock'); // Cantidad en stock
+            $table->boolean('activo')->default(true); // Producto activo o no
+            $table->timestamps(); // created_at, updated_at
+            $table->softDeletes(); // deleted_at para eliminaciones lógicas
         });
     }
 

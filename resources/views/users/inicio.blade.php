@@ -34,7 +34,7 @@
             <h3 class="text-3xl font-bold mb-6">Estadísticas rápidas</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-lg">
                 <div class="bg-gray-100 p-8 rounded-lg shadow text-center">
-                    <strong class="text-3xl">150</strong> Productos en Inventario
+                    <strong class="text-3xl">{{ $totalProductos }}</strong> Productos en Inventario
                 </div>
                 <div class="bg-gray-100 p-8 rounded-lg shadow text-center">
                     <strong class="text-3xl">45</strong> Ventas este mes

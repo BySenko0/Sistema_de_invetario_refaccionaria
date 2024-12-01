@@ -3,26 +3,38 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Categoria;
+use App\Models\Producto;
+use App\Models\Proveedor;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('Admin.inicio'); // Vista: resources/views/Admin/dashboard.blade.php
+        $totalProductos = Producto::count();
+
+        return view('Admin.inicio' , compact('totalProductos')); 
     }
 
     public function inventario()
     {
-        return view('Admin.inventario'); // Vista: resources/views/Admin/inventario.blade.php
+
+        $productos = Producto::with('categoria')->get();
+        $categorias = Categoria::all();
+    
+        // Pasar ambas variables a la vista
+        return view('Admin.inventario', compact('productos', 'categorias'));
     }
 
     public function ventas()
     {
-        return view('Admin.ventas'); // Vista: resources/views/Admin/ventas.blade.php
+        return view('Admin.ventas'); 
     }
 
     public function proveedor()
     {
-        return view('Admin.proveedor'); // Vista: resources/views/Admin/proveedor.blade.php
+        $proveedores = Proveedor::all();
+        
+        return view('Admin.proveedor',compact('proveedores')); 
     }
 }
