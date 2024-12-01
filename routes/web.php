@@ -1,48 +1,51 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
+// Ruta principal
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Rutas protegidas con autenticación
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    // Ruta del dashboard
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    // Rutas para Admin
+    Route::prefix('admin')->group(function () {
+        Route::get('/inicio', [AdminController::class, 'dashboard'])->name('admin.inicio');
+        Route::get('/inventario', [AdminController::class, 'inventario'])->name('admin.inventario');
+        Route::get('/ventas', [AdminController::class, 'ventas'])->name('admin.ventas');
+        Route::get('/proveedor', [AdminController::class, 'proveedor'])->name('admin.proveedor');
+    });
 });
 
-use App\Http\Controllers\AuthController;
-
-
-// Definir la ruta de login con nombre
+// Ruta de login
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
-
-// Ruta para la vista de inventario
-Route::get('/inventario', function () {
-    return view('inventario'); // Nombre correcto de la vista
-})->name('inventario');
-
-// Ruta para la vista de Ventas
-Route::get('/ventas', function () {
-    return view('ventas'); // Apunta al archivo resources/views/ventas.blade.php
-})->name('ventas');
-
-Route::get('/usuario', function () {
-    return view('usuario');
+// Rutas para User
+Route::prefix('user')->group(function () {
+    Route::get('/inicio', [UserController::class, 'inicio'])->name('users.inicio');
+    Route::get('/ventas', [UserController::class, 'ventas'])->name('users.ventas');
+    Route::get('/inventario', [UserController::class, 'inventario'])->name('users.inventario');
 });
 
-Route::get('/admin', function () {
-    return view('admin');
+// Rutas adicionales
+Route::get('/1', function () {
+    return view('vista_pruebas');
 });
 
-Route::get('/proveedor', function () {
-    return view('proveedor');
+Route::get('/2', function () {
+    return view('vistauser');
 });
