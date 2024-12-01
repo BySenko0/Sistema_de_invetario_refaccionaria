@@ -44,9 +44,12 @@
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
                     <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black">Configuración</a></li>
                 </ul>
-                <div class="py-1">
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black">Cerrar sesión</a>
-                </div>
+                <form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black">
+        Cerrar sesión
+    </button>
+</form>
             </div>
         </div>
     </nav>
