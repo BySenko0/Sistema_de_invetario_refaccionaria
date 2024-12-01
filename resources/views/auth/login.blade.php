@@ -1,48 +1,41 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refaccionaria Olvera - Administrador</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col items-center justify-center h-screen bg-[#e6e6fa]">
 
-        <x-validation-errors class="mb-4" />
-
-        @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ $value }}
-            </div>
-        @endsession
-
+    <!-- Título principal -->
+    <div class="text-center mb-10">
+        <h1 class="text-7xl font-bold text-black drop-shadow-lg tracking-wide mb-10">
+            Refaccionaria Olvera
+        </h1>
+    </div>
+    
+    <!-- Caja del formulario -->
+    <div class="bg-white p-12 rounded-xl shadow-2xl border-2 border-black max-w-lg w-full">
+        <h1 class="text-4xl font-bold text-center mb-6 text-black">Administrador</h1>
         <form method="POST" action="{{ route('login') }}">
             @csrf
-
-            <div>
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <!-- Campo Usuario -->
+            <div class="mb-6">
+                <label for="username" class="block font-bold text-lg text-black mb-2">Usuario</label>
+                <input type="text" id="username" name="username" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ingresa tu usuario" required>
             </div>
-
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+            <!-- Campo Contraseña -->
+            <div class="mb-6">
+                <label for="password" class="block font-bold text-lg text-black mb-2">Contraseña</label>
+                <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ingresa tu contraseña" required>
             </div>
-
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ms-4">
-                    {{ __('Log in') }}
-                </x-button>
-            </div>
+            <!-- Botón de Ingresar -->
+            <button type="submit" class="w-full bg-blue-500 text-white rounded-full py-3 text-lg font-bold hover:bg-blue-700 hover:scale-105 transition-all">
+                Ingresar
+            </button>
         </form>
-    </x-authentication-card>
-</x-guest-layout>
+    </div>
+
+</body>
+</html>
