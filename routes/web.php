@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AlertasController;
+
+Route::patch('/alertas/{id}/resolver', [AlertasController::class, 'resolverAlerta'])->name('alertas.resolver');
+
 
 Route::get('/', function () {
     return view('welcome');
