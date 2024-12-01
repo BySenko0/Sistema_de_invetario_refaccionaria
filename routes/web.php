@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthRoutesController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProveedorController;
 
 Route::get('/login', [AuthRoutesController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthRoutesController::class, 'login'])->name('login');
@@ -30,6 +32,10 @@ Route::middleware([
 ])->group(function () {
     // Rutas para Admin
     Route::prefix('admin')->group(function () {
+        // Rutas para CRUD de productos
+        Route::resource('/admin/productos', ProductoController::class);
+        Route::resource('proveedor', ProveedorController::class);
+        
         Route::get('/inicio', [AdminController::class, 'dashboard'])->name('admin.inicio');
         Route::get('/inventario', [AdminController::class, 'inventario'])->name('admin.inventario');
         Route::get('/ventas', [AdminController::class, 'ventas'])->name('admin.ventas');
@@ -44,11 +50,4 @@ Route::prefix('user')->group(function () {
     Route::get('/inventario', [UserController::class, 'inventario'])->name('users.inventario');
 });
 
-// Rutas adicionales
-Route::get('/1', function () {
-    return view('vista_pruebas');
-});
 
-Route::get('/2', function () {
-    return view('vistauser');
-});

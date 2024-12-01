@@ -18,7 +18,6 @@ class AlertaInventario extends Model
 
     public function producto()
     {
-        return $this->belongsTo(Almacen::class, 'id_producto');
+        return $this->belongsTo(Producto::class, 'id_producto');
     }
 }
-

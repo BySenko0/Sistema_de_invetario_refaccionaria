@@ -9,6 +9,9 @@ class Proveedor extends Model
 {
     use HasFactory;
 
+    // Especificar la tabla correcta
+    protected $table = 'proveedores';
+
     protected $fillable = [
         'nombre',
         'nombre_contacto',
@@ -16,5 +19,9 @@ class Proveedor extends Model
         'telefono',
         'activo',
     ];
-}
 
+    public function productos()
+    {
+        return $this->hasMany(Producto::class, 'proveedor_id');
+    }
+}

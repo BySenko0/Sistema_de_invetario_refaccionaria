@@ -1,6 +1,6 @@
 @extends('layouts.menubar')
 
-@section('title', 'Vista de Pruebas')
+@section('title', 'Index Admin')
 
 @section('content')
 
@@ -13,7 +13,7 @@
                 </div>
                 <div class="bg-gray-100 p-6 rounded-lg shadow text-center">
                     <h3 class="text-xl font-bold">Productos en Inventario</h3>
-                    <p class="text-lg text-gray-700">320</p>
+                    <p class="text-lg text-gray-700">{{ $totalProductos }}</p>
                 </div>
                 <div class="bg-gray-100 p-6 rounded-lg shadow text-center">
                     <h3 class="text-xl font-bold">Proveedores Activos</h3>

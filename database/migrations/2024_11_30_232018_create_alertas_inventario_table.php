@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps(); // created_at, updated_at
         
             // Foreign key
-            $table->foreign('id_producto')->references('id')->on('almacen')->onDelete('cascade');
+            $table->foreign('id_producto')->references('id')->on('productos')->onDelete('cascade');
         });
             
     }
