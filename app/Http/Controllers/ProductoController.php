@@ -71,8 +71,8 @@ class ProductoController extends Controller
      */
     public function edit($id)
     {
-        $producto = \App\Models\Producto::findOrFail($id);
-        $categorias = \App\Models\Categoria::all(); // Para listar categorías en el formulario
+        $producto = Producto::findOrFail($id);
+        $categorias = Categoria::all(); 
         return view('admin.edit-producto', compact('producto', 'categorias'));
     }
     

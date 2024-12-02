@@ -16,7 +16,11 @@ return new class extends Migration
             $table->id(); // PK
             $table->string('nombre')->unique(); 
             $table->timestamps(); 
-        });   
+        });  
+        
+        DB::table('categorias')->insert([
+            'nombre' => 'aceite',
+        ]);
     }
 
     /** 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\Producto;
 use App\Models\Proveedor;
+use App\Models\Venta;
 
 class AdminController extends Controller
 {
@@ -28,7 +29,9 @@ class AdminController extends Controller
 
     public function ventas()
     {
-        return view('Admin.ventas'); 
+        $productos = Producto::where('activo', 1)->get();
+        
+        return view('Admin.ventas', compact('productos')); 
     }
 
     public function proveedor()

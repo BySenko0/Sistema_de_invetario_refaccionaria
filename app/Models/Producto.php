@@ -39,8 +39,4 @@ class Producto extends Model
         return $this->hasMany(AlertaInventario::class, 'id_producto');
     }
 
-    public function detalleVentas()
-    {
-        return $this->hasMany(DetalleVenta::class, 'id_producto');
-    }
 }
