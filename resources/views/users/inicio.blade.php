@@ -37,7 +37,7 @@
                     <strong class="text-3xl">{{ $totalProductos }}</strong> Productos en Inventario
                 </div>
                 <div class="bg-gray-100 p-8 rounded-lg shadow text-center">
-                    <strong class="text-3xl">45</strong> Ventas este mes
+                    <strong class="text-3xl"> {{ $totalVentas }} </strong> Ventas este mes
                 </div>
             </div>
         </div>
