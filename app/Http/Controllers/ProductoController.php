@@ -8,6 +8,15 @@ use \App\Models\Producto;
 
 class ProductoController extends Controller
 {
+    private function redirectBasedOnRole($routeName, $message, $type = 'success')
+    {
+        if (request()->is('admin/*')) {
+            return redirect()->route("admin.$routeName")->with($type, $message);
+        } else {
+            return redirect()->route("users.$routeName")->with($type, $message);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -19,14 +28,15 @@ class ProductoController extends Controller
         $totalProductos = Producto::count();
     
         // Retorna la vista del inventario y envía los productos
-        return view('admin.index', compact('totalProductos'));
-        return view('admin.inventario', compact('productos', 'categorias'));
-        return view('users.index', compact('totalProductos'));
-        return view('users.inventario', compact('productos', 'categorias'));
+        if (request()->is('admin/*')) {
+            return view('admin.index', compact('totalProductos'));
+            return view('admin.inventario', compact('productos', 'categorias'));
+        } else {
+            return view('users.index', compact('totalProductos'));
+            return view('users.inventario', compact('productos', 'categorias'));
+        }
     }
     
-
-
     /**
      * Show the form for creating a new resource.
      */
@@ -55,7 +65,7 @@ class ProductoController extends Controller
     
         Producto::create($validated);
     
-        return redirect()->route('admin.inventario')->with('success', 'Producto agregado exitosamente.');
+        return $this->redirectBasedOnRole('success', 'Producto agregado exitosamente.');
     }
 
     /**
@@ -92,7 +102,7 @@ class ProductoController extends Controller
     
         $producto = Producto::findOrFail($id);
         $producto->update($validated);
-    
+
         return redirect()->route('admin.inventario')->with('success', 'Producto actualizado exitosamente.');
         return redirect()->route('users.inventario')->with('success', 'Producto actualizado exitosamente.');
     }
@@ -104,7 +114,7 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        $producto = \App\Models\Producto::findOrFail($id);
+        $producto = Producto::findOrFail($id);
         $producto->delete();
     
         return redirect()->route('admin.inventario')->with('success', 'Producto eliminado correctamente.');
