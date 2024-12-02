@@ -47,15 +47,23 @@ Route::middleware([
         Route::post('/venta/update-sale', [VentaController::class, 'updateSale'])->name('venta.updateSale');
         Route::post('/venta/confirm-sale', [VentaController::class, 'confirmSale'])->name('venta.confirmSale');
         Route::post('/venta/cancel-sale', [VentaController::class, 'cancelSale'])->name('venta.cancelSale');
-        Route::get('/venta/remove-product/{id}', [VentaController::class, 'removeProduct'])->name('venta.removeProduct');
+        Route::post('/venta/remove-product/{id}', [VentaController::class, 'removeProduct'])->name('venta.removeProduct');
     });
 });
 
 // Rutas para User
 Route::prefix('user')->group(function () {
+    Route::resource('productos', ProductoController::class);
+    Route::resource('venta', VentaController::class);
+
     Route::get('/inicio', [UserController::class, 'inicio'])->name('users.inicio');
     Route::get('/ventas', [UserController::class, 'ventas'])->name('users.ventas');
     Route::get('/inventario', [UserController::class, 'inventario'])->name('users.inventario');
+    Route::post('/venta/add-product', [VentaController::class, 'addProduct'])->name('venta.addProduct');
+    Route::post('/venta/update-sale', [VentaController::class, 'updateSale'])->name('venta.updateSale');
+    Route::post('/venta/confirm-sale', [VentaController::class, 'confirmSale'])->name('venta.confirmSale');
+    Route::post('/venta/cancel-sale', [VentaController::class, 'cancelSale'])->name('venta.cancelSale');
+    Route::post('/venta/remove-product/{id}', [VentaController::class, 'removeProduct'])->name('venta.removeProduct');
 });
 
 
