@@ -90,10 +90,11 @@ class ProductoController extends Controller
             'categoria' => 'required|exists:categorias,id',
         ]);
     
-        $producto = \App\Models\Producto::findOrFail($id);
+        $producto = Producto::findOrFail($id);
         $producto->update($validated);
     
         return redirect()->route('admin.inventario')->with('success', 'Producto actualizado exitosamente.');
+        return redirect()->route('users.inventario')->with('success', 'Producto actualizado exitosamente.');
     }
     
     

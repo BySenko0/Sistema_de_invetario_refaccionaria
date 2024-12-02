@@ -18,7 +18,9 @@ class UserController extends Controller
     public function ventas()
     {
         
-        return view('users.ventas'); // Vista: resources/views/User/ventas.blade.php
+        $productos = Producto::where('activo', 1)->get();
+        
+        return view('users.ventas', compact('productos'));
     }
 
     public function inventario()

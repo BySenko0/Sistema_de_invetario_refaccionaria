@@ -8,6 +8,15 @@ use App\Models\Categoria;
 
 class VentaController extends Controller
 {
+    private function redirectBasedOnRole($routeName, $message, $type = 'success')
+    {
+        if (request()->is('admin/*')) {
+            return redirect()->route("admin.$routeName")->with($type, $message);
+        } else {
+            return redirect()->route("users.$routeName")->with($type, $message);
+        }
+    }
+
     public function index()
     {
 
@@ -15,7 +24,29 @@ class VentaController extends Controller
         $categorias = Categoria::all();
         $totalProductos = Producto::count();
 
-        return view('admin.ventas', compact('productos', 'categorias', 'totalProductos'));
+        if (request()->is('admin/*')) {
+            return view('admin.ventas', compact('productos', 'categorias', 'totalProductos'));
+        } else {
+            return view('users.ventas', compact('productos', 'categorias', 'totalProductos'));
+        }
+    }
+    public function removeProduct($id)
+    {
+        // Obtener la venta actual de la sesión
+        $venta = session('venta', []);
+
+        // Verificar si el producto existe en la venta
+        if (isset($venta[$id])) {
+            // Eliminar el producto de la venta
+            unset($venta[$id]);
+
+            // Actualizar la sesión
+            session(['venta' => $venta]);
+
+            return $this->redirectBasedOnRole('ventas', 'Producto eliminado de la venta.');
+        } else {
+            return $this->redirectBasedOnRole('ventas', 'El producto no se encuentra en la venta.', 'error');
+        }
     }
 
     public function addProduct(Request $request)
@@ -63,7 +94,7 @@ class VentaController extends Controller
         // Guardar la venta en la sesión
         session(['venta' => $venta]);
     
-        return redirect()->route('admin.ventas')->with('success', 'Producto agregado a la venta.');
+        return $this->redirectBasedOnRole('ventas', 'Producto agregado a la venta.');
     }    
 
     public function updateSale(Request $request)
@@ -86,15 +117,14 @@ class VentaController extends Controller
     
         session(['venta' => $venta]);
     
-        return back()->with('success', 'Venta actualizada.');
+        return $this->redirectBasedOnRole('ventas', 'Venta actualizada.');
     }
 
     public function cancelSale()
     {
         // Limpiar la venta de la sesión
         session()->forget('venta');
-    
-        return redirect()->route('admin.ventas')->with('success', 'Venta cancelada.');
+        return $this->redirectBasedOnRole('ventas', 'Venta cancelada.');
     }
     
 
@@ -102,7 +132,7 @@ class VentaController extends Controller
     {
         $venta = session('venta', []);
         if (empty($venta)) {
-            return redirect()->route('admin.ventas')->withErrors(['error' => 'No hay productos en la venta.']);
+            return $this->redirectBasedOnRole('ventas', 'No hay productos en la venta.', 'error');
         }
     
         $total = 0;
@@ -127,7 +157,7 @@ class VentaController extends Controller
         // Limpiar la venta de la sesión
         session()->forget('venta');
     
-        return redirect()->route('admin.ventas')->with('success', 'Venta realizada con éxito.');
+        return $this->redirectBasedOnRole('ventas', 'Venta realizada con éxito.');
     }
     
     
@@ -160,6 +190,6 @@ class VentaController extends Controller
         }
 
         // Redirigir con mensaje de éxito
-        return redirect()->route('admin.ventas')->with('success', 'Venta realizada con éxito');
+        return $this->redirectBasedOnRole('ventas', 'Venta realizada con éxito.');
     }
 }
