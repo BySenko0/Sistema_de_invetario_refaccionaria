@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthRoutesController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\VentaController;
 
 Route::get('/login', [AuthRoutesController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthRoutesController::class, 'login'])->name('login');
@@ -35,11 +36,18 @@ Route::middleware([
         // Rutas para CRUD de productos
         Route::resource('/admin/productos', ProductoController::class);
         Route::resource('proveedor', ProveedorController::class);
+        Route::resource('venta', VentaController::class);
         
         Route::get('/inicio', [AdminController::class, 'dashboard'])->name('admin.inicio');
         Route::get('/inventario', [AdminController::class, 'inventario'])->name('admin.inventario');
         Route::get('/ventas', [AdminController::class, 'ventas'])->name('admin.ventas');
         Route::get('/proveedor', [AdminController::class, 'proveedor'])->name('admin.proveedor');
+        Route::get('/venta', [VentaController::class, 'index'])->name('venta.index');
+        Route::post('/venta/add-product', [VentaController::class, 'addProduct'])->name('venta.addProduct');
+        Route::post('/venta/update-sale', [VentaController::class, 'updateSale'])->name('venta.updateSale');
+        Route::post('/venta/confirm-sale', [VentaController::class, 'confirmSale'])->name('venta.confirmSale');
+        Route::post('/venta/cancel-sale', [VentaController::class, 'cancelSale'])->name('venta.cancelSale');
+        Route::get('/venta/remove-product/{id}', [VentaController::class, 'removeProduct'])->name('venta.removeProduct');
     });
 });
 
