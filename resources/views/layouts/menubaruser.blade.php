@@ -76,7 +76,7 @@
                 <svg class="w-6 h-6 text-gray-800 dark:text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9h13a5 5 0 0 1 0 10H7M3 9l4-4M3 9l4 4"/>
                 </svg>
-                <a href="{{ route('login') }}" class="ml-3"> Iniciar seccion</a>
+                <a href="{{ route('login') }}" class="ml-3"> Iniciar sesión</a>
             </li>
         </ul>
     </div>
