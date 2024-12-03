@@ -59,9 +59,9 @@
                             <td class="border border-gray-300 px-4 py-2 text-center">
                                 <form action="{{ route('venta.removeProduct', $item['id']) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-                                        Eliminar
-                                    </button>
+                                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                                            Eliminar
+                                        </button>
                                 </form>
                             </td>
                         </tr>
@@ -170,7 +170,7 @@
                     <span class="sr-only">Cerrar</span>
                 </button>
             </div>
-            <form action="{{ route('venta.addProduct') }}" method="POST">
+            <form action="{{ route('users.venta.addProduct') }}" method="POST">
                 @csrf
                 <input type="hidden" name="producto_id" id="producto_id">
                 <label for="cantidad" class="block mb-2">Cantidad (Stock disponible: <span id="stockDisponible"></span>)</label>
