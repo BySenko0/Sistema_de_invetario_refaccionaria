@@ -22,6 +22,18 @@
     </div>
     @endif
 
+    <!-- Barra de búsqueda -->
+    <form method="GET" action="{{ route('admin.inventario') }}" class="mb-4">
+        <input 
+            type="text" 
+            name="search" 
+            id="searchInput" 
+            class="w-full border px-4 py-2 rounded-lg" 
+            placeholder="Buscar producto..."
+            value="{{ request('search') }}"
+        >
+    </form>
+    
     <!-- Botón para abrir el modal -->
     <button type="button" data-modal-target="addModal" data-modal-toggle="addModal" 
     class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-4 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
@@ -29,39 +41,38 @@
     </button>
 
     <table class="table-auto w-full border-collapse border-gray-300">
-    <thead class="bg-[#E6E6FA]">
-        <tr>
-            <th class="border border-gray-300 px-4 py-2 text-center text-gray-700 font-medium bg-gray-100">#</th>
-            <th class="border border-gray-300 px-4 py-2 text-center text-gray-700 font-medium bg-gray-100">Nombre</th>
-            <th class="border border-gray-300 px-4 py-2 text-center text-gray-700 font-medium bg-gray-100">Descripción</th>
-            <th class="border border-gray-300 px-4 py-2 text-center text-gray-700 font-medium bg-gray-100">Categoria</th>
-            <th class="border border-gray-300 px-4 py-2 text-center text-gray-700 font-medium bg-gray-100">Precio</th>
-            <th class="border border-gray-300 px-4 py-2 text-center text-gray-700 font-medium bg-gray-100">Stock</th>
-            <th class="border border-gray-300 px-4 py-2 text-center text-gray-700 font-medium bg-gray-100"></th>
-        </tr>
-    </thead>
-    <tbody class="hover:bg-gray-100">
-    @foreach ($productos as $producto)
-        <tr>
-            <td class="border px-4 py-2 text-center">{{ $loop->iteration }}</td>
-            <td class="border border-gray-300 px-4 py-2 text-center">{{ $producto->nombre }}</td>
-            <td class="border border-gray-300 px-4 py-2 text-center">{{ $producto->descripcion }}</td>
-            <td class="border border-gray-300 px-4 py-2 text-center">{{ $producto->categoria->nombre }}</td>
-            <td class="border border-gray-300 px-4 py-2 text-center">${{ $producto->precio }}</td>
-            <td class="border border-gray-300 px-4 py-2 text-center">{{ $producto->stock }}</td>
-            <td class="border border-gray-300 px-4 py-2 text-center">
+        <thead class="bg-[#E6E6FA]">
+            <tr>
+                <th class="border border-gray-300 px-4 py-2 text-center text-gray-700 font-medium bg-gray-100">#</th>
+                <th class="border border-gray-300 px-4 py-2 text-center text-gray-700 font-medium bg-gray-100">Nombre</th>
+                <th class="border border-gray-300 px-4 py-2 text-center text-gray-700 font-medium bg-gray-100">Descripción</th>
+                <th class="border border-gray-300 px-4 py-2 text-center text-gray-700 font-medium bg-gray-100">Categoría</th>
+                <th class="border border-gray-300 px-4 py-2 text-center text-gray-700 font-medium bg-gray-100">Precio</th>
+                <th class="border border-gray-300 px-4 py-2 text-center text-gray-700 font-medium bg-gray-100">Stock</th>
+                <th class="border border-gray-300 px-4 py-2 text-center text-gray-700 font-medium bg-gray-100">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($productos as $producto)
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2 text-center">{{ $loop->iteration }}</td>
+                    <td class="border px-4 py-2 text-center">{{ $producto->nombre }}</td>
+                    <td class="border px-4 py-2 text-center">{{ $producto->descripcion }}</td>
+                    <td class="border px-4 py-2 text-center">{{ $producto->categoria->nombre }}</td>
+                    <td class="border px-4 py-2 text-center">${{ number_format($producto->precio, 2) }}</td>
+                    <td class="border px-4 py-2 text-center">{{ $producto->stock }}</td>
+                    <td class="border px-4 py-2 text-center">
+                        <!-- Botón para abrir el modal de edición -->
+                        <button type="button" data-modal-toggle="editModal-{{ $producto->id }}"
+                            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+                            Editar
+                        </button>
 
-                <!-- Botón para abrir el modal -->
-                <button type="button" data-modal-toggle="editModal-{{ $producto->id }}"
-                        class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
-                    Editar
-                </button>
-
-                <!-- Botón para abrir el modal de eliminación -->
-                <button type="button" data-modal-toggle="deleteModal-{{ $producto->id }}"
-                    class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2">
-                    Eliminar
-                </button>
+                        <!-- Botón para abrir el modal de eliminación -->
+                        <button type="button" data-modal-toggle="deleteModal-{{ $producto->id }}"
+                            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2">
+                            Eliminar
+                        </button>
 
                 <!-- Modal de Edición -->
                 <div id="editModal-{{ $producto->id }}" tabindex="-1" class="hidden fixed inset-0 z-50 overflow-y-auto">

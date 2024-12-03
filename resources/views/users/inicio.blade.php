@@ -1,6 +1,6 @@
 @extends('layouts.menubaruser')
 
-@section('title', 'Vista de Pruebas')
+@section('title', 'Usuario - Inicio')
 
 @section('content')
 
@@ -13,20 +13,28 @@
 
         <!-- Tarjetas para Inventario y Ventas -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <a href="{{ route('users.inventario') }}" class="block">
             <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                <img src="https://via.placeholder.com/350x220" alt="Inventario" class="w-full h-56 object-cover">
+                <img src="{{ asset('img/usuario/1.jpg') }}" alt="Inventario" class="w-full h-56 object-cover">
                 <div class="p-6 text-center">
-                    <h2 class="text-2xl font-bold mb-4">Inventario</h2>
-                    <a href="/inventario" class="bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 text-lg">Ir al Inventario</a>
+                <h2 class="text-2xl font-bold mb-4">Inventario</h2>
+                <p class="bg-blue-500 text-white py-3 px-6 rounded text-lg inline-block hover:bg-blue-600">
+                    Ir al Inventario
+                </p>
                 </div>
             </div>
+            </a>
+            <a href="{{ route('users.ventas') }}" class="block">
             <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                <img src="https://via.placeholder.com/350x220" alt="Ventas" class="w-full h-56 object-cover">
+                <img src="{{ asset('img/usuario/2.png') }}" alt="Ventas" class="w-full h-56 object-cover">
                 <div class="p-6 text-center">
-                    <h2 class="text-2xl font-bold mb-4">Ventas</h2>
-                    <a href="/ventas" class="bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 text-lg">Ir a Ventas</a>
+                <h2 class="text-2xl font-bold mb-4">Ventas</h2>
+                <p class="bg-blue-500 text-white py-3 px-6 rounded text-lg inline-block hover:bg-blue-600">
+                    Ir a Ventas
+                </p>
                 </div>
             </div>
+            </a>
         </div>
 
         <!-- Estadísticas rápidas -->
