@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Producto;
 use App\Models\Categoria;
+use App\Models\Venta;
 
 class UserController extends Controller
 {
     public function inicio()
     {
         $totalProductos = Producto::count();
+        $totalVentas = Venta::count();
  
-        return view('users.inicio' , compact('totalProductos')); // Vista: resources/views/User/usuario.blade.php
+        return view('users.inicio' , compact('totalProductos' , 'totalVentas' )); // Vista: resources/views/User/usuario.blade.php
     }
 
     public function ventas()

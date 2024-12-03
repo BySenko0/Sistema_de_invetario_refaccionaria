@@ -8,25 +8,48 @@ use \App\Models\Producto;
 
 class ProductoController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Obtiene todos los productos con sus categorías relacionadas
-        $productos = Producto::with('categoria')->get();
+        // Obtener el texto de búsqueda desde la solicitud
+        $query = $request->input('search');
+    
+        // Filtrar productos con categorías relacionadas según el texto de búsqueda
+        $productos = Producto::with('categoria')
+            ->when($query, function ($q) use ($query) {
+                $q->where('nombre', 'like', "%$query%")
+                  ->orWhere('descripcion', 'like', "%$query%")
+                  ->orWhereHas('categoria', function ($q) use ($query) {
+                      $q->where('nombre', 'like', "%$query%");
+                  });
+            })
+            ->get();
+    
+        // Obtener todas las categorías y contar productos
         $categorias = Categoria::all();
         $totalProductos = Producto::count();
     
-        // Retorna la vista del inventario y envía los productos
-        return view('admin.index', compact('totalProductos'));
-        return view('admin.inventario', compact('productos', 'categorias'));
-        return view('users.index', compact('totalProductos'));
-        return view('users.inventario', compact('productos', 'categorias'));
+        // Verifica si la solicitud es para la parte de administración
+        if (request()->is('admin/*')) {
+            return view('admin.inventario', [
+                'productos' => $productos,
+                'categorias' => $categorias,
+                'totalProductos' => $totalProductos,
+                'query' => $query, // Añadir el término de búsqueda para usarlo en la vista
+            ]);
+        } else {
+            return view('users.inventario', [
+                'productos' => $productos,
+                'categorias' => $categorias,
+                'totalProductos' => $totalProductos,
+                'query' => $query, // Añadir el término de búsqueda para usarlo en la vista
+            ]);
+        }
     }
     
-
-
     /**
      * Show the form for creating a new resource.
      */
@@ -36,7 +59,7 @@ class ProductoController extends Controller
         $categorias = Categoria::all();
     
         // Pasar las categorías a la vista
-        return view('Admin.create-producto', compact('categorias'));
+        return view('admin.create-producto', compact('categorias'));
     }
     
 
@@ -45,6 +68,7 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
+        // Validar los datos del formulario
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
@@ -53,17 +77,27 @@ class ProductoController extends Controller
             'stock' => 'required|integer|min:0',
         ]);
     
+        // Crear el producto
         Producto::create($validated);
     
-        return redirect()->route('admin.inventario')->with('success', 'Producto agregado exitosamente.');
+        // Definir los mensajes para la redirección
+        $type = 'success'; // Tipo de mensaje (puedes cambiarlo según la lógica)
+        $message = 'Producto creado exitosamente.';
+    
+        // Redirigir al inventario con un mensaje de éxito
+        return redirect()->route("admin.inventario")->with($type, $message);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        // Buscar el producto con su categoría relacionada
+        $producto = Producto::with('categoria')->findOrFail($id);
+    
+        // Retornar una vista para mostrar el producto
+        return view('admin.show-producto', compact('producto'));
     }
 
     /**
@@ -72,7 +106,9 @@ class ProductoController extends Controller
     public function edit($id)
     {
         $producto = Producto::findOrFail($id);
-        $categorias = Categoria::all(); 
+        $categorias = Categoria::all();
+    
+        // Retornar una vista para editar el producto
         return view('admin.edit-producto', compact('producto', 'categorias'));
     }
     
@@ -82,20 +118,25 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Validar los datos del formulario
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
             'precio' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'categoria' => 'required|exists:categorias,id',
+            'categoria_id' => 'required|exists:categorias,id', // Cambiado a 'categoria_id'
         ]);
     
+        // Buscar el producto por su ID o lanzar un error 404 si no existe
         $producto = Producto::findOrFail($id);
+    
+        // Actualizar los datos del producto
         $producto->update($validated);
     
+        // Redirigir al inventario con un mensaje de éxito
         return redirect()->route('admin.inventario')->with('success', 'Producto actualizado exitosamente.');
-        return redirect()->route('users.inventario')->with('success', 'Producto actualizado exitosamente.');
     }
+    
     
     
 
@@ -104,10 +145,14 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        $producto = \App\Models\Producto::findOrFail($id);
-        $producto->delete();
+        try {
+            $producto = Producto::findOrFail($id);
+            $producto->delete();
     
-        return redirect()->route('admin.inventario')->with('success', 'Producto eliminado correctamente.');
+            return redirect()->route('admin.inventario')->with('success', 'Producto eliminado correctamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.inventario')->with('error', 'Error al eliminar el producto. Intenta nuevamente.');
+        }
     }
     
 }

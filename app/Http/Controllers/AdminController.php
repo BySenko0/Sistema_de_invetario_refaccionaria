@@ -13,8 +13,10 @@ class AdminController extends Controller
     public function dashboard()
     {
         $totalProductos = Producto::count();
+        $totalProveedores = Proveedor::count();
+        $totalVentas = Venta::count();
 
-        return view('Admin.inicio' , compact('totalProductos')); 
+        return view('Admin.inicio' , compact('totalProductos' , 'totalProveedores' , 'totalVentas')); 
     }
 
     public function inventario()
