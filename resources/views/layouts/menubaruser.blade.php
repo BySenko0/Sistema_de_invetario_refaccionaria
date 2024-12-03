@@ -40,7 +40,7 @@
             </button>
             <div id="userDropdown" class="z-10 hidden bg-lavender divide-y divide-gray-100 rounded-lg shadow w-44 ">
                 <div class="py-1">
-                    <a href="{{ route('login') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black">iniciar seccion</a>
+                    <a href="{{ route('login') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black">Iniciar sesión</a>
                 </div>
             </div>
         </div>
